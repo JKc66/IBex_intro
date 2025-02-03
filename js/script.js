@@ -1,11 +1,37 @@
 // JavaScript functions
 // Use modern JavaScript features and best practices
 const copyToClipboard = async (text) => {
+    // Try using the modern Clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch (err) {
+            console.error('Clipboard API failed: ', err);
+            // Fall through to fallback
+        }
+    }
+    
+    // Fallback using temporary textarea element
     try {
-        await navigator.clipboard.writeText(text);
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        
+        // Make the textarea hidden but maintain its content layout
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        
+        // Select and copy the text
+        textArea.select();
+        document.execCommand('copy');
+        
+        // Clean up
+        textArea.remove();
         return true;
     } catch (err) {
-        console.error('Could not copy text: ', err);
+        console.error('Fallback clipboard method failed: ', err);
         return false;
     }
 };
