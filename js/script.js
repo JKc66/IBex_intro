@@ -236,24 +236,27 @@ const initTooltips = () => {
 };
 
 // Mobile warning handler
-const handleMobileWarning = () => {
-    if (window.innerWidth <= 768 && !localStorage.getItem('mobile-warning-dismissed')) {
-        const warning = document.createElement('div');
-        warning.className = 'mobile-warning';
-        warning.innerHTML = `
-            For the best experience, please use a desktop or laptop computer.
-            <button onclick="dismissMobileWarning()">Got it</button>
-        `;
-        document.body.prepend(warning);
+const dismissMobileWarning = () => {
+    const warning = document.querySelector('.mobile-warning');
+    if (warning) {
+        warning.style.display = 'none';
+        localStorage.setItem('mobile-warning-dismissed', 'true');
+        // Remove the extra padding from body
+        document.body.style.paddingTop = '0';
     }
 };
 
-// Dismiss mobile warning
-window.dismissMobileWarning = () => {
-    localStorage.setItem('mobile-warning-dismissed', 'true');
-    document.querySelector('.mobile-warning')?.remove();
+// Check if warning should be shown on mobile
+const checkMobileWarning = () => {
+    if (window.innerWidth <= 768 && !localStorage.getItem('mobile-warning-dismissed')) {
+        const warning = document.querySelector('.mobile-warning');
+        if (warning) {
+            warning.style.display = 'flex';
+            document.body.style.paddingTop = '50px';
+        }
+    }
 };
 
-// Check for mobile on load and resize
-window.addEventListener('load', handleMobileWarning);
-window.addEventListener('resize', throttle(handleMobileWarning, 1000));
+// Run on page load and resize
+window.addEventListener('load', checkMobileWarning);
+window.addEventListener('resize', checkMobileWarning);
