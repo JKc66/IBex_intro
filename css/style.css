@@ -98,6 +98,7 @@ h2 {
     background: #1E1E1E;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Prism.js enhancements */
@@ -123,7 +124,6 @@ pre[class*="language-"] {
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.3);
     user-select: none;
-    padding: 0.5em 0;
 }
 
 .line-numbers .line-numbers-rows > span {
@@ -162,13 +162,15 @@ pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
 }
 
 /* Dark mode enhancements for code blocks */
-body.dark-mode pre[class*="language-"] {
-    background: #1E3A5F !important;
+body.dark-mode .code-container {
+    background: #1E3A5F;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-body.dark-mode .line-numbers .line-numbers-rows {
-    background: rgba(0, 0, 0, 0.4);
-    border-right: 1px solid rgba(255, 255, 255, 0.15);
+body.dark-mode pre[class*="language-"] {
+    background: #1E3A5F !important;
+    border: none;
 }
 
 /* Mobile responsiveness for code blocks */
@@ -244,10 +246,6 @@ body.dark-mode .step {
     background-color: #2c2c2c;
     border: 1px solid #333;
     box-shadow: none;
-}
-
-body.dark-mode .code-container {
-    border: 1px solid #333;
 }
 
 body.dark-mode #table-of-contents h2 {
